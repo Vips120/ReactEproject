@@ -8,14 +8,14 @@ class Navigation extends Component {
             <Navbar bg="primary" variant="dark">
             <Navbar.Brand href="#home">V-commerce</Navbar.Brand>
             <Nav className="mr-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link as={Link} to="/home">Home</Nav.Link>
              
             </Nav>
             <Form inline>
             <Nav.Link 
              as={Link}
             to="/signup">SignUp</Nav.Link>
-              <Nav.Link href="#pricing">SignIn</Nav.Link>
+              <Nav.Link as={Link} to="/signin">SignIn</Nav.Link>
             </Form>
           </Navbar>
         

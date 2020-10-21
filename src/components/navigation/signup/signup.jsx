@@ -3,6 +3,7 @@ import SimpleReactValidator from "simple-react-validator";
 import {connect} from "react-redux";
 import {UserRegister} from "../../../redux/action/user/user";
 import "./signup.css";
+import { Link } from "react-router-dom";
 class Signup extends Component {
     constructor(){
         super();
@@ -13,6 +14,7 @@ class Signup extends Component {
             password:""
         };
         this.validator = new SimpleReactValidator({autoForceUpdate: this});
+      
     }
 
     formhandlesubmit = (e) => {
@@ -28,6 +30,7 @@ class Signup extends Component {
            };
         //    console.log(item);
         this.props.UserRegister(item);
+        // this.props.history.push("/sigin");
        } else {
            this.validator.showMessages();
            this.forceUpdate();
@@ -43,6 +46,13 @@ class Signup extends Component {
             <div className="container p-4">
                 <div className="row">
                 <div className="col-md-8">
+                {
+                    this.props.error ?
+                    <h5 className="alert alert-danger">
+                        {this.props.error.message}
+                    </h5>
+                    :  ''
+                }  
                <form onSubmit={this.formhandlesubmit}>
              <div className="form-group">
                  <input type="text" placeholder="enter username" 
@@ -80,7 +90,12 @@ class Signup extends Component {
                  />
                     {this.validator.message("password", this.state.password, "required")}
              </div>
-<button type="submit"  className="btn btn-primary btn-lg btn-block">submit</button>
+             <div className="text-right">
+                 <Link to="/signin">alreay have acccount?</Link>
+             </div>
+<button type="submit"  className="btn btn-primary btn-lg btn-block m-10"
+ style={{marginTop:"20px"}}
+>submit</button>
             
             </form>            
                     
@@ -92,8 +107,8 @@ class Signup extends Component {
 }
  
 const mapStateToProps = (state) => {
-    console.log(state);
-    return state;
+//  console.log(state);
+   return {error:state.register_info.message_error};
 }
 
 export default connect(mapStateToProps, {UserRegister})(Signup);
