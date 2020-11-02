@@ -4,14 +4,22 @@ import { Link } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
 import {LoginUser} from "../../../redux/action/user/user";
 class Signin extends Component{
+   
     constructor(){
         super();
         this.state = {
             emailId:"",
-            password:""
+            password:"",
+            data:"",
+            clearData:""
         };
         this.validator = new SimpleReactValidator({autoForceUpdate: this});
     }
+// componentDidMount(){
+//     this.alertMessage(this.props.register_token.item.message)
+// }
+
+
     formhandlesubmit = (e) => {
        e.preventDefault();
        if(this.validator.allValid()){
@@ -32,12 +40,22 @@ class Signin extends Component{
     inputDatahandle = (e) => {
        this.setState({[e.target.name]: e.target.value});
     };
+   alertMessage = (data) => {
+ this.setState({data: data});
+   }
+
   render(){
     return(
         <div className="container p-4">
-            <h4 className="alert alert-success">
-                Thanks for the registration
-            </h4>
+            {/* {
+                 this.props.register_token ? 
+            <h2 className="alert alert-success">{this.state.data}</h2>
+            // <h2 className="alert alert-success">{}</h2>
+                // this.alertMessage(this.props.register_token.item.message)
+ : null
+
+            } */}
+            
             <div className="row">
             <div className="col-md-8">
                
@@ -85,6 +103,8 @@ class Signin extends Component{
 }
 const mapStateToProps = (state) => {
     console.log(state);
-    return {error:state.auth.message_error};
+    return {
+         register_token: state.register_info,
+        error:state.auth.message_error};
 }
 export default connect(mapStateToProps, {LoginUser})(Signin);

@@ -8,14 +8,25 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
-import reducers from "./redux/store/index"
-const store = createStore(reducers, applyMiddleware(thunk));
+import reducers from "./redux/store/index";
+import { persistConfig} from "./redux/store/index";
+import { PersistGate } from 'redux-persist/integration/react';
+import {persistStore,persistReducer} from "redux-persist";
+
+const persistReducers = persistReducer( persistConfig, reducers);
+
+const store = createStore(persistReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+      <PersistGate loading={<h1>LOADING....</h1>}
+          persistor={persistStore(store)}
+      >
       <App />
+      </PersistGate>
+     
       </BrowserRouter>
     </Provider>
   

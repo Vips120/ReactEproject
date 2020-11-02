@@ -1,7 +1,9 @@
 import axios from "axios";
-
+import {Header} from "../../shared/helpers/header";
 const REGISTER_ENDPOINT = "http://localhost:4800/api/register";
 const LOGIN_ENDPOINT = "http://localhost:4800/api/auth";
+const LOGGEDIN_USER_ENDPOINT = "http://localhost:4800/api/me";
+
 
 let config = {
     headers: {
@@ -15,6 +17,10 @@ export const userRegister = (data) => {
 
 export const userLogin = (data) => {
     return axios.post(LOGIN_ENDPOINT, JSON.stringify(data), config);
+}
+
+export const userLoggedin = () => {
+    return axios.get(LOGGEDIN_USER_ENDPOINT, {headers:Header(),config});
 }
 
 
